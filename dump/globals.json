@@ -1,0 +1,43 @@
+{
+  "_id": {
+    "$oid": "663215daac571fda97b96b52"
+  },
+  "content": {
+    "root": {
+      "type": "root",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+        {
+          "children": [
+            {
+              "detail": 0,
+              "format": 0,
+              "mode": "normal",
+              "style": "",
+              "text": "Hello Hello Alan",
+              "type": "text",
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "paragraph",
+          "version": 1
+        }
+      ],
+      "direction": "ltr"
+    }
+  },
+  "content_html": "<p>Hello Hello Alan</p>",
+  "globalType": "hello",
+  "createdAt": {
+    "$date": "2024-05-01T10:13:46.325Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-05T18:06:48.017Z"
+  },
+  "__v": 0
+}

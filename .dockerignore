@@ -1,0 +1,9 @@
+.git
+.gitignore
+node_modules
+.env.example
+.env
+compose.yaml
+nodemon.json
+README.md
+.DS_Store
