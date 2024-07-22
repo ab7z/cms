@@ -9,9 +9,6 @@ on:
     paths-ignore:
       - "dump/**"
 
-env:
-  IMAGE: cms
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,10 +28,10 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.actor }}/$IMAGE:${{ github.ref_name }}
+          tags: ghcr.io/${{ github.actor }}/${{ vars.IMAGE }}:${{ github.ref_name }}
           platforms: linux/arm64/v8
-          cache-from: type=registry,ref=ghcr.io/${{ github.actor }}/$IMAGE:buildcache
-          cache-to: type=inline,ref=ghcr.io/${{ github.actor }}/$IMAGE:buildcache,mode=max
+          cache-from: type=registry,ref=ghcr.io/${{ github.actor }}/${{ vars.IMAGE }}:buildcache
+          cache-to: type=inline,ref=ghcr.io/${{ github.actor }}/${{ vars.IMAGE }}:buildcache,mode=max
 
   deployment:
     runs-on: ubuntu-latest
@@ -60,6 +57,7 @@ jobs:
           ACTOR: ${{ github.actor }}
           REF_NAME: ${{ github.ref_name }}
           TOKEN: ${{ secrets.GH_TOKEN }}
+          IMAGE: ${{ vars.IMAGE }}
           PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
           MONGO_DB_NAME: ${{ secrets.MONGO_DB_NAME }}
           MONGO_INITDB_DATABASE: ${{ secrets.MONGO_INITDB_DATABASE }}
@@ -78,6 +76,7 @@ jobs:
             REF_NAME,
             USERNAME,
             ACTOR,
+            IMAGE
             PAYLOAD_SECRET,
             MONGO_DB_NAME,
             MONGO_INITDB_DATABASE,

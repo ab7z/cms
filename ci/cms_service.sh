@@ -22,7 +22,7 @@ if ! docker service create \
   --env MONGO_DB_PASS="$MONGO_DB_PASS" \
   --env STAGE="$REF_NAME" \
   --with-registry-auth \
-  ghcr.io/"$USERNAME"/cms:"$REF_NAME"; then
+  ghcr.io/"$USERNAME"/$IMAGE:"$REF_NAME"; then
   echo "CMS service error"
   exit 1;
 fi
