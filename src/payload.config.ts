@@ -52,8 +52,8 @@ export default buildConfig({
   rateLimit: {
     skip: () => true,
   },
-  routes: {
-    api: "/cms/api",
-    admin: "/cms/admin",
-  },
+  // routes: {
+  //   api: "/cms/api",
+  //   admin: "/cms/admin",
+  // },
 })
