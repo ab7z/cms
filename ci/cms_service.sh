@@ -8,13 +8,13 @@ docker service rm cms-"$REF_NAME" || true
 sleep 10
 
 docker rmi --force ghcr.io/"$USERNAME"/"$IMAGE":"$REF_NAME"
-docker network create --driver overlay cms || true
+docker network create --driver overlay infra || true
 
 if ! docker service create \
   --name cms-"$REF_NAME" \
   --replicas 3 \
   --network "$REF_NAME"-branch \
-  --network cms \
+  --network infra \
   --env PAYLOAD_SECRET="$PAYLOAD_SECRET" \
   --env MONGO_PROD_URL=db-"$REF_NAME":27017 \
   --env MONGO_DB_NAME="$MONGO_DB_NAME" \

@@ -5,7 +5,6 @@ echo "$TOKEN" | docker login ghcr.io -u "$USERNAME" --password-stdin
 SCRIPT_PATH="$(dirname "$0")"
 
 Cleanup () {
-  printenv > debug_"$REF_NAME".txt
   docker logout ghcr.io
   docker volume prune --all --force || true
   docker system prune --force --all --volumes || true
