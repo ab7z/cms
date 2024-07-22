@@ -83,5 +83,5 @@ jobs:
             MONGO_INITDB_ROOT_USERNAME,
             MONGO_INITDB_ROOT_PASSWORD,
             MONGO_DB_USER,
-            MONGO_DB_PASS,
+            MONGO_DB_PASS
           script: bash ./cms/ci/deployment.sh
