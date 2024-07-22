@@ -4,10 +4,13 @@ on:
   push:
     branches:
       - main
+      - rev
       - dev
-      - staging
     paths-ignore:
       - "dump/**"
+
+env:
+  IMAGE: cms
 
 jobs:
   build:
@@ -28,10 +31,10 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/ab7z/cms:${{ github.ref_name }}
+          tags: ghcr.io/${{ github.actor }}/$IMAGE:${{ github.ref_name }}
           platforms: linux/arm64/v8
-          cache-from: type=registry,ref=ghcr.io/ab7z/cms:buildcache
-          cache-to: type=inline,ref=ghcr.io/ab7z/cms:buildcache,mode=max
+          cache-from: type=registry,ref=ghcr.io/${{ github.actor }}/$IMAGE:buildcache
+          cache-to: type=inline,ref=ghcr.io/${{ github.actor }}/$IMAGE:buildcache,mode=max
 
   deployment:
     runs-on: ubuntu-latest
@@ -49,12 +52,12 @@ jobs:
           port: 22
           overwrite: true
           source: "ci"
-          target: "/root/"
+          target: "/root/cms/"
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@v1.0.3
         env:
-          USERNAME: ab7z
-          ACTOR: ab7z
+          USERNAME: ${{ github.actor }}
+          ACTOR: ${{ github.actor }}
           REF_NAME: ${{ github.ref_name }}
           TOKEN: ${{ secrets.GH_TOKEN }}
           PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
@@ -64,9 +67,6 @@ jobs:
           MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
           MONGO_DB_USER: ${{ secrets.MONGO_DB_USER }}
           MONGO_DB_PASS: ${{ secrets.MONGO_DB_PASS }}
-          MAIN_TRIGGER: ${{ vars.NETLIFY_MAIN_TRIGGER }}
-          DEV_TRIGGER: ${{ vars.NETLIFY_DEV_TRIGGER }}
-          STAGING_TRIGGER: ${{ vars.NETLIFY_STAGING_TRIGGER }}
         with:
           host: ${{ secrets.HZ_HOST }}
           username: ${{ secrets.HZ_SSH_USERNAME }}
@@ -85,7 +85,4 @@ jobs:
             MONGO_INITDB_ROOT_PASSWORD,
             MONGO_DB_USER,
             MONGO_DB_PASS,
-            MAIN_TRIGGER,
-            DEV_TRIGGER,
-            STAGING_TRIGGER
-          script: bash ./ci/deployment.sh
+          script: bash ./cms/ci/deployment.sh

@@ -30,9 +30,4 @@ if ! bash "$SCRIPT_PATH"/proxy.sh; then
   exit 1
 fi
 
-if ! bash "$SCRIPT_PATH"/netlify.sh; then
-  Cleanup
-  exit 1
-fi
-
 Cleanup

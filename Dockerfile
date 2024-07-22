@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 FROM node:lts-alpine as base
-RUN npm install -g pnpm@9.0.6
+RUN npm install -g pnpm@9.5.0
 
 FROM base as deps
 RUN apk add --no-cache libc6-compat
@@ -26,6 +26,6 @@ COPY --from=builder /app/build ./build
 EXPOSE 8000
 
 # Add image to GitHub repository
-LABEL org.opencontainers.image.source https://github.com/ab7z/cms
+LABEL org.opencontainers.image.source="https://github.com/ab7z/cms"
 
 CMD node dist/server.js
