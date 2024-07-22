@@ -49,7 +49,7 @@ jobs:
           port: 22
           overwrite: true
           source: "ci"
-          target: "/root/cms/"
+          target: "/root/cms_${{ github.ref_name }}/"
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@v1.0.3
         env:
@@ -72,11 +72,11 @@ jobs:
           port: 22
           script_stop: true
           envs: >
-            TOKEN,
-            REF_NAME,
             USERNAME,
             ACTOR,
-            IMAGE
+            REF_NAME,
+            TOKEN,
+            IMAGE,
             PAYLOAD_SECRET,
             MONGO_DB_NAME,
             MONGO_INITDB_DATABASE,
@@ -84,4 +84,4 @@ jobs:
             MONGO_INITDB_ROOT_PASSWORD,
             MONGO_DB_USER,
             MONGO_DB_PASS
-          script: bash ./cms/ci/deployment.sh
+          script: bash ./cms/ci_"$REF_NAME"/deployment.sh
