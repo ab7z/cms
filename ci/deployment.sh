@@ -122,12 +122,13 @@ sleep 10
 
 if ! docker service create \
   --name proxy \
-  --replicas 3 \
+  --replicas 1 \
   --network infra \
   --publish 80:80 \
   --publish 443:443 \
-  --mount type=bind,readonly=true,source="$SCRIPT_PATH"/nginx.conf,target=/etc/nginx/nginx.conf \
-  nginx:stable; then
+  --mount type=bind,readonly=true,source="$SCRIPT_PATH"/Caddyfile,target=/etc/caddy/Caddyfile \
+  --mount type=volume,source=caddy_data,target=/data \
+  caddy:2.8-alpine; then
   echo "proxy service error"
   Cleanup
   exit 1;

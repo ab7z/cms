@@ -1,0 +1,12 @@
+dev.bernstein.dev {
+	@notCMS {
+		not path /cms/*
+	}
+
+	basic_auth @notCMS {
+		{$STAGE_USER} {$STAGE_PASS}
+	}
+	reverse_proxy http://fe-dev:3000
+
+	reverse_proxy /cms/* http://cms-dev:8000
+}
